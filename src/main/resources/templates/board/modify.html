@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+  <div class="container-md">
+  <h1>Board Modify Page...</h1>
+  <hr>
+    <form action="/board/update" method="post"  enctype="multipart/form-data" th:with="boardDTO=${boardFileDTO.boardDTO}">
+      <input type="hidden" name="bno" th:value="${boardDTO.bno}" >
+      <div class="mb-3">
+        <label for="t" class="form-label">Title</label>
+        <input type="text" class="form-control" id="t" name="title" th:value="${boardDTO.title}">
+      </div>
+      <div class="mb-3">
+        <label for="w" class="form-label">Writer</label>
+        <input type="text" class="form-control" id="w" name="writer" th:value="${boardDTO.writer}" readonly="readonly">
+      </div>
+      <div id="smarteditor" class="mb-3">
+        <label for="c" class="form-label">Content</label>
+        <textarea class="form-control" id="c" name="content" cols="10" rows="20" th:text="${boardDTO.content}"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" id="regBtn">update</button>
+    </form>
+
+    <script th:src="@{/js/boardRegister.js}" charset="UTF-8"></script>
+    <script th:src="@{/smarteditor/js/HuskyEZCreator.js}" charset="UTF-8"></script>
+
+  </div>
+</div>
