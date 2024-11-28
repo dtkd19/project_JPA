@@ -75,4 +75,8 @@ public interface BoardService {
     String getUpdateContent(long bno);
 
     void deleteFileFromDB(String uuid);
+
+    void updateBoardContent(BoardDTO boardDTO);
+
+    void delete(Long bno);
 }

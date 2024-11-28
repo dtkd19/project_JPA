@@ -1,26 +1,23 @@
 package com.sh.project_JPA.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
-public class Board extends Timebase{
-
+public class Comment extends Timebase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bno;
+    private Long cno;
     @Column(nullable = false)
-    private String title;
+    private Long bno;
     @Column(nullable = false)
     private String writer;
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(length = 2000,nullable = false)
     private String content;
-
 }

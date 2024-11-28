@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div layout:fragment="content" class="container-md">
+    <h1>Modify Page</h1>
+    <hr>
+    <th:block th:with="uvo=${#authentication.getPrincipal().userDTO}" >
+        <form action="/user/mypage" method="post" >
+            <input type="hidden" name="email" th:value="${uvo.email }">
+            <div class="card mb-3" style="max-width: 540px; margin: 0 auto;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img style="margin-top : 35px;" src="/image/사람2.png" class="img-fluid rounded-start"
+                             alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <input style="margin-bottom : 3px;" type="text" id="e" th:value="${uvo.email }" readonly="readonly">
+                                <input style="margin-bottom : 3px;" type="text" id="n" name="nickName" th:value="${uvo.nickName }">
+                                <input type="text" id="p" name="pwd" placeholder="password...">
+                            </h5>
+                            <span style="margin-right : 3px"  th:each="avo:${uvo.authList }" class="badge text-bg-info">[[${avo.auth }]]</span>
+                            <p class="card-text">가입일 : [[${uvo.regAt }]]</p>
+                            <p class="card-text">
+                                <small class="text-body-secondary">마지막 로그인 :
+                                    [[${uvo.lastLogin }]]</small>
+                            </p>
+                            <button type="submit" class = "btn btn-primary btn-sm">modify</button>
+                            <a href="/user/delete"><button type="button" class = "btn btn-danger btn-sm">delete</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </th:block>
+
+</div>

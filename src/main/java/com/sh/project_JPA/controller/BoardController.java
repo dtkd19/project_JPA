@@ -6,6 +6,7 @@ import com.sh.project_JPA.dto.BoardFileDTO;
 import com.sh.project_JPA.dto.FileDTO;
 import com.sh.project_JPA.dto.PagingVO;
 import com.sh.project_JPA.entity.File;
+import com.sh.project_JPA.handler.FileDeleteHandler;
 import com.sh.project_JPA.handler.FileHandler;
 import com.sh.project_JPA.handler.ImageHandler;
 import com.sh.project_JPA.service.BoardService;
@@ -32,6 +33,7 @@ public class BoardController {
     private ImageHandler imageHandler;
 
     private final BoardService boardService;
+    private final FileDeleteHandler fileDeleteHandler;
 
     @Autowired
     private FileHandler fileHandler;
@@ -100,24 +102,52 @@ public class BoardController {
 
         // 기존 이미지 목록과 비교하여 삭제된 이미지들을 추출
         List<String> updatedImages = imageHandler.extractImageUrls(boardService.getUpdateContent(boardDTO.getBno())); // 서버에서 파일에 저장돼있는 정보를 가져옴
-        List<String> imagesToDelete = new ArrayList<>(existingImages);
-        imagesToDelete.removeAll(updatedImages);
+        log.info(">>> updateImages >> {}" , updatedImages);
+        List<String> imagesToDelete = new ArrayList<>(updatedImages);
+        log.info(">>> imagesToDelete1 >> {} " , imagesToDelete);
 
-        log.info(">>> imagesToDelete >> {} " , imagesToDelete);
+        imagesToDelete.removeAll(existingImages);
+
+        log.info(">>> imagesToDelete2 >> {} " , imagesToDelete);
 
         for (String imageUrl : imagesToDelete) {
             log.info(">>> imageUrl >> {}" , imageUrl);
             String uuid = imageHandler.extractUuidFromUrl(imageUrl);  // 이미지 URL에서 UUID 추출
             log.info(">>> uuid >>> {}" , uuid);
             if (uuid != null) {
+                String imageFileName = imageHandler.extractImageFileName(imageUrl);
+                log.info(">>> imageFileName ?? > {}" , imageFileName);
+                String saveDir = imageHandler.extractSaveDir(imageUrl);
+                log.info(">>> saveDir ?? > {}", saveDir);
+                // 실제파일 삭제
+                fileDeleteHandler.deleteFile(saveDir,uuid,imageFileName);
                 // DB에서 파일 정보 삭제
                 boardService.deleteFileFromDB(uuid);
             }
         }
 
+        String updatedContent = imageHandler.removeImageUrlsFromContent(boardDTO.getContent(), imagesToDelete);
+
+        log.info("updateContent >>>> {}" , updatedContent);
+
+        boardDTO.setContent(updatedContent);
+
+        log.info("boardDTO.getUpdateContent >>>> {}" , boardDTO.getContent());
+
+        boardService.updateBoardContent(boardDTO);
 
         return  "redirect:/board/detail?bno=" + boardDTO.getBno();
     }
+
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("bno") Long bno){
+
+        boardService.delete(bno);
+
+        return "redirect:/board/list";
+    }
+
 
 
 }

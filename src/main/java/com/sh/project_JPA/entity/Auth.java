@@ -1,8 +1,8 @@
 package com.sh.project_JPA.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @Entity
 @Getter
@@ -11,16 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class Board extends Timebase{
-
+public class Auth extends Timebase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bno;
+    private long id;
     @Column(nullable = false)
-    private String title;
+    private String email;
     @Column(nullable = false)
-    private String writer;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
+    private String auth;
 }

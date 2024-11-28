@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.conBox1{
+	background-color: #f5f5dc;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.comment{
+	background-color: #f5f5dc;
+	display: flex;
+	margin-bottom: 30px;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.cbtn{
+	display : flex;
+	justify-content: end;
+	margin-top : 8px;
+}
+.cbtn button {
+    background-color: #d3c8a0;
+    color: #4b4b4b;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.cbtn button:hover {
+    background-color: #b9ad85;
+}
+
+.cbtn button:active {
+    background-color: #a1976a;
+}

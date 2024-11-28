@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+
+<div layout:fragment="content" class="container-md" >
+    <h1>UserList</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <th:block th:each="uvo:${userList}">
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{/image/사람2.png}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title">[[${uvo.email }]]</h4>
+                        <span style="margin-right : 3px"  th:each="avo:${uvo.authList }" class="badge text-bg-info">[[${avo.auth }]]</span>
+                        <br><br> <p class="card-text">가입일 : [[${uvo.regAt }]]</p>
+                        <p>마지막 로그인 : [[${uvo.lastLogin }]]</p>
+
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>

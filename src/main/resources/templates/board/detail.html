@@ -2,7 +2,13 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+      layout:decorate="~{layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link rel="stylesheet" th:href="@{/css/detail.css}">
+
+<head>
+  <link rel="stylesheet" th:href="@{/css/detail.css}">
+</head>
 
 <div layout:fragment="content">
   <div class="container-md">
@@ -28,12 +34,110 @@
                   readonly="readonly" th:utext="${boardDTO.content}"></div>
       </div>
 
+      <a th:href="@{/board/list}"><button type="button" id="listBtn" class="btn btn-info">List</button></a>
       <a th:href="@{/board/modify(bno=${boardDTO.bno})}"><button type="button" id="modBtn" class="btn btn-primary">Modify</button></a>
       <a th:href="@{/board/delete(bno=${boardDTO.bno})}"><button type="button" id="delBtn" class="btn btn-danger">Delete</button></a>
-
-
-
     </th:block>
 
+    <hr>
+    <br>
+
+    <!--/* 댓글 라인 */-->
+    <th:block sec:authorize="isAuthenticated()">
+    <div class="comment">
+			<span id="cmtWriter">
+              [[${#authentication.getPrincipal().userDTO.nickName}]]</span>
+      <textarea id="cmtText" placeholder="댓글을 남겨보세요"></textarea>
+      <div class="cbtn">
+        <button type="button" class="btn btn-success" id="cmtAddBtn">등록</button>
+      </div>
+    </div>
+    </th:block>
+
+    <th:block sec:authorize="isAnonymous()">
+      <div class="comment">
+			<span>
+              익명 </span>
+        <textarea id="cantText" placeholder="댓글..."></textarea>
+        <div class="cbtn">
+          <button type="button" class="btn btn-success" id="cantAddBtn">등록</button>
+        </div>
+      </div>
+    </th:block>
+
+    <ul class="list-group list-group-flush" id="cmtListArea">
+      <li class="list-group-item">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">writer</div>
+          Content
+        </div>
+        <span class="badge text-bg-primary rounded-pill">regDate</span>
+      </li>
+    </ul>
+
+    <div>
+      <button type="button" id="moreBtn" data-page="1" class="btn btn-outline-warning" style="visibility: hidden">MORE +</button>
+    </div>
+
+    <!--/* Modal */-->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="cmtWriterMod">Writer</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control" id="cmtTextMod">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="cmtModBtn" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
+
+
+  <script th:inline="javascript">
+    let bnoVal = [[${boardFileDTO.boardDTO.bno}]]
+    console.log(bnoVal);
+  </script>
+
+  <th:block sec:authorize="isAuthenticated()">
+    <script th:inline="javascript">
+      var userNickName = [[${#authentication.principal.userDTO.nickName}]];
+      console.log("User Nickname: " + userNickName);
+
+       var userRoles = [[${#authentication.principal.userDTO.authList}]];
+        var rolesArray = userRoles.map(function(role) {
+          return role.auth;
+        });
+
+       var isAdmin = rolesArray.includes('ROLE_ADMIN');
+       console.log("Is Admin: " + isAdmin);
+    </script>
+  </th:block>
+
+  <th:block sec:authorize="isAnonymous()">
+    <script th:inline="javascript">
+      var userNickName = '익명';
+      var isAdmin = false;
+
+      console.log("User Nickname: " + userNickName);
+      console.log("Is Admin: " + isAdmin);
+    </script>
+  </th:block>
+
+
+
+  <script th:src="@{/js/boardDetail.js}" charset="UTF-8"></script>
+
+  <script>
+    spreadComment(bnoVal);
+  </script>
+
 </div>

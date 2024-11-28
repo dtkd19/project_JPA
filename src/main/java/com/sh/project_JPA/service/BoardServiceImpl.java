@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,5 +138,26 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void deleteFileFromDB(String uuid) {
         fileRepository.deleteByUuid(uuid);
+    }
+
+    @Override
+    public void updateBoardContent(BoardDTO boardDTO) {
+        Optional<Board> optional = boardRepository.findById(boardDTO.getBno());
+
+        if(optional.isPresent()){
+            Board board = optional.get();
+            log.info(">>> board >> {}", board);
+            board.setContent(boardDTO.getContent());
+            board.setModAt(LocalDateTime.now());
+            log.info(">>> board2 >> {}", board);
+            boardRepository.save(board);
+        }
+
+
+    }
+
+    @Override
+    public void delete(Long bno) {
+        boardRepository.deleteById(bno);
     }
 }

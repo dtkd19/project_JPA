@@ -1,3 +1,5 @@
+console.log("board Reg js in ");
+
 let oEditors = []
 
 smartEditor = function() {

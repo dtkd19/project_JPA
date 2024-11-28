@@ -2,7 +2,8 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+      layout:decorate="~{layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div layout:fragment="content" class="container-md">
   <div>
@@ -15,7 +16,7 @@
       </div>
       <div class="mb-3">
         <label for="w" class="form-label">Writer</label>
-        <input type="text" class="form-control" id="w" name="writer" placeholder="writer...">
+        <input type="text" class="form-control" id="w" name="writer" readonly="readonly" th:value="${#authentication.getPrincipal().userDTO.nickName}">
       </div>
       <div id="smarteditor" class="mb-3">
         <label for="c" class="form-label">Content</label>
