@@ -5,10 +5,10 @@
       layout:decorate="~{layout/layout}">
 
 
-<div layout:fragment="content" class="container-md" >
-    <h1>UserList</h1>
+<div layout:fragment="content" class="container-md"  style="height : 800px;" >
+    <h1 style="color: white;">UserList</h1>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4" >
         <th:block th:each="uvo:${userList}">
             <div class="col">
                 <div class="card">

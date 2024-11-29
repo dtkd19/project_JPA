@@ -4,9 +4,9 @@
       xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
-<div layout:fragment="content">
-  <div class="container-md">
-    <h1>Board List Page</h1>
+<div layout:fragment="content" style="height : 700px;">
+  <div class="container-md cBox" style="margin-top : 100px;" >
+    <h1 style="color: white;">Board List Page</h1>
     <hr>
 
     <table class="table table-hover">
@@ -28,7 +28,6 @@
       </tbody>
     </table>
 
-    [[${pgvo}]]
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item"  th:if="${pgvo.hasPrev}">

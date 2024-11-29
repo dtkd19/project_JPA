@@ -5,9 +5,10 @@
       layout:decorate="~{layout/layout}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div layout:fragment="content" class="container-md">
-  <div>
-    <h1>Board Register Page</h1>
+
+<div layout:fragment="content">
+  <div class="container-md cBox" style="margin-top : 50px;" >
+    <h1 style="color: white;">Board Register Page</h1>
     <hr>
     <form action="/board/register" method="post"  enctype="multipart/form-data">
       <div class="mb-3">
@@ -22,7 +23,9 @@
         <label for="c" class="form-label">Content</label>
         <textarea class="form-control" id="c" name="content" cols="10" rows="20" placeholder="content..."></textarea>
       </div>
-      <button type="submit" class="btn btn-primary" id="regBtn">register</button>
+      <div class="flexBox" style="display: flex; justify-content:end;">
+      <button type="submit" class="btn btn-secondary" id="regBtn">register</button>
+      </div>
     </form>
 
     <script th:src="@{/js/boardRegister.js}" charset="UTF-8"></script>

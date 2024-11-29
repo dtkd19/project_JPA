@@ -5,10 +5,10 @@
       layout:decorate="~{layout/layout}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div layout:fragment="content" class="container-md">
-    <h1>Modify Page</h1>
+<div layout:fragment="content" class="container-md" style="height : 800px;">
+    <h1 style="color: white;">Modify Page</h1>
     <hr>
-    <th:block th:with="uvo=${#authentication.getPrincipal().userDTO}" >
+    <th:block th:with="uvo=${#authentication.getPrincipal().userDTO}"  >
         <form action="/user/mypage" method="post" >
             <input type="hidden" name="email" th:value="${uvo.email }">
             <div class="card mb-3" style="max-width: 540px; margin: 0 auto;">

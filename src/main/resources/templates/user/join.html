@@ -4,9 +4,9 @@
       xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
-<div layout:fragment="content">
-    <div class="container-md">
-        <h1>User Join Page</h1>
+<div layout:fragment="content" style="height : 600px;">
+    <div class="container-md cBox" style="margin-top : 200px; width: 700px;">
+        <h1 style="color: white;">User Join Page</h1>
         <hr>
         <form action="/user/join" method="post">
             <div class="mb-3">
@@ -24,7 +24,9 @@
                 <input type="text"
                        class="form-control" id="n" name="nickName" placeholder="nickName...">
             </div>
-            <button type="submit" class="btn btn-primary">JOIN</button>
+            <div class="flexBox" style="display: flex; justify-content:end;">
+            <button type="submit" class="btn btn-secondary">JOIN</button>
+            </div>
         </form>
 
     </div>
